@@ -5,9 +5,13 @@
 
 set -e
 
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+PROJECT_DIR="${PROJECT_DIR:-$SCRIPT_DIR}"
 WORKSPACE="${WORKSPACE:-/workspace}"
 CACHE_DIR="${WORKSPACE}/.cache/huggingface"
 MODEL_ID="huihui-ai/Llama-3.3-70B-Instruct-abliterated"
+
+[ -d "$PROJECT_DIR/venv" ] && source "$PROJECT_DIR/venv/bin/activate"
 
 echo "캐시 경로: $CACHE_DIR"
 echo "모델: $MODEL_ID"

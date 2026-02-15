@@ -1,4 +1,5 @@
 venv/
+.vllm.log
 __pycache__/
 *.pyc
 data/

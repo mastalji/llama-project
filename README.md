@@ -19,7 +19,7 @@ source venv/bin/activate
 
 
 ## 2. 대화 (추론)
-**터미널 1: 서버**
+**터미널 1: 서버** (GPU 로딩 막대 표시됨)
 cd /workspace/llama-project
 source venv/bin/activate
 pip install -r requirements-inference.txt   # vLLM (1회)
@@ -41,8 +41,14 @@ cd /workspace/llama-project
 |------|--------|
 | venv 활성화 | `source venv/bin/activate` |
 | 코드만 pull | `cd /workspace/llama-project && git pull` |
-| 학습만 (데이터 이미 있으면) | `axolotl train configs/qlora_70b_ko.yaml` |
+| 학습만 (데이터 이미 있으면) | `./run_train.sh` (env 자동 전환 포함) |
 | 데이터만 준비 | `python scripts/prepare_dataset.py` |
+---
+
+## 문제 해결
+**run_server 시 `ModuleNotFoundError: flex_attention`**  
+→ `pip install --upgrade torchao` 후 재실행
+
 ---
 
 ## 환경 변수

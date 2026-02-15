@@ -26,7 +26,21 @@ else
     exit 1
 fi
 
-# 2. 데이터 준비 (없을 경우)
+# 2. 학습용 환경으로 전환 (Axolotl 호환)
+echo "학습용 환경으로 전환 중..."
+pip install torch==2.5.1 torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121 -q
+pip install -r "${PROJECT_DIR}/requirements-training.txt" -q
+
+# 3. 학습 종료 시 추론용으로 복구
+restore_inference() {
+    echo ""
+    echo "추론용 환경으로 복구 중..."
+    pip install -r "${PROJECT_DIR}/requirements-inference.txt" -q
+    echo "복구 완료."
+}
+trap restore_inference EXIT
+
+# 4. 데이터 준비 (없을 경우)
 DATA_FILE="${PROJECT_DIR}/data/korean_instructions_uncensored.jsonl"
 if [ ! -f "$DATA_FILE" ]; then
     echo "데이터셋 준비 중..."
@@ -36,7 +50,7 @@ else
     echo "데이터셋 이미 존재: $DATA_FILE"
 fi
 
-# 3. 학습 실행
+# 5. 학습 실행
 CONFIG="${PROJECT_DIR}/configs/qlora_70b_ko.yaml"
 echo "학습 시작. 설정: $CONFIG"
 echo "출력: ${PROJECT_DIR}/outputs/qlora-70b-ko"
@@ -46,3 +60,4 @@ axolotl train "$CONFIG"
 
 echo ""
 echo "학습 완료. LoRA 어댑터: ${PROJECT_DIR}/outputs/qlora-70b-ko"
+echo "(추론용 환경 자동 복구됨)"

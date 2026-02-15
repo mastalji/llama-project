@@ -1,0 +1,5 @@
+# Axolotl 학습용 (추론 환경과 충돌하는 패키지만)
+# run_train.sh에서 학습 전 설치, 학습 후 requirements-inference.txt로 복구
+# torch는 스크립트에서 --index-url 로 별도 설치
+torchao==0.12.0
+transformers==4.55.2
