@@ -25,20 +25,25 @@ if [ ! -d "$VENV_DIR" ]; then
 fi
 source "$VENV_DIR/bin/activate"
 
-echo "[3/7] pip 업그레이드..."
-pip install -U packaging setuptools wheel ninja
+# venv가 이미 있고 핵심 패키지 있으면 스킵 (Network Volume에 venv 저장 시)
+if [ -d "$VENV_DIR" ] && python3 -c "import torch; import axolotl" 2>/dev/null; then
+    echo "[3-7/7] venv에 패키지 이미 있음. 스킵."
+else
+    echo "[3/7] pip 업그레이드..."
+    pip install -U packaging setuptools wheel ninja
 
-echo "[4/7] PyTorch (CUDA 12.x) 설치..."
-pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
+    echo "[4/7] PyTorch (CUDA 12.x) 설치..."
+    pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
 
-echo "[5/7] 기본 의존성 설치..."
-[ -f "$SCRIPT_DIR/requirements.txt" ] && pip install -r "$SCRIPT_DIR/requirements.txt" || pip install -r requirements.txt
+    echo "[5/7] 기본 의존성 설치..."
+    [ -f "$SCRIPT_DIR/requirements.txt" ] && pip install -r "$SCRIPT_DIR/requirements.txt" || pip install -r requirements.txt
 
-echo "[6/7] Axolotl 설치 (flash-attn, deepspeed)..."
-pip install --no-build-isolation "axolotl[flash-attn,deepspeed]"
-pip install "packaging>=24.0"
+    echo "[6/7] Axolotl 설치 (flash-attn, deepspeed)..."
+    pip install --no-build-isolation "axolotl[flash-attn,deepspeed]"
+    pip install "packaging>=24.0"
 
-echo "[7/7] 완료"
+    echo "[7/7] 완료"
+fi
 
 echo ""
 echo "============================================"
