@@ -49,6 +49,19 @@ cd /workspace/llama-project
 **run_server 시 `ModuleNotFoundError: flex_attention`**  
 → `pip install --upgrade torchao` 후 재실행
 
+**run_server 시 `ImportError: flash_attn_2_cuda ... undefined symbol`**  
+→ flash-attn이 추론용 torch와 맞지 않음.
+
+**해결**: 아래 중 하나 실행 (환경: Python 3.11, torch 2.9, CUDA 12.8 기준)
+```bash
+# 1) 사전 빌드 wheel - 1분 내 설치 (권장)
+pip install https://github.com/mjun0812/flash-attention-prebuild-wheels/releases/download/v0.7.16/flash_attn-2.8.3+cu128torch2.9-cp311-cp311-linux_x86_64.whl
+
+# 2) 소스 빌드 - 15~30분 소요
+pip install flash-attn --no-build-isolation --upgrade --force-reinstall
+```
+Python/CUDA/torch 버전이 다르면 [flashattn.dev](https://flashattn.dev/) 또는 [mjun0812 packages](https://github.com/mjun0812/flash-attention-prebuild-wheels/blob/main/doc/packages.md)에서 맞는 wheel 찾아서 위처럼 `pip install <URL>` 로 설치.
+
 ---
 
 ## 환경 변수

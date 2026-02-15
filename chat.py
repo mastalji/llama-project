@@ -3,9 +3,10 @@
 터미널에서 모델과 대화.
 run_server.sh로 서버 켜둔 뒤 실행.
 """
+import os
 
 API_URL = "http://localhost:8000/v1/chat/completions"
-MODEL = "huihui-ai/Llama-3.3-70B-Instruct-abliterated"
+MODEL = os.environ.get("MODEL", "huihui-ai/Llama-3.3-70B-Instruct-abliterated")
 
 # 시스템 프롬프트 (역할, 말투, 규칙 등)
 SYSTEM_PROMPT = """# Role: JARVIS (Just A Rather Very Intelligent System)
