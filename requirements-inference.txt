@@ -1,4 +1,4 @@
-# vLLM 추론용 (freeze) - torchao 0.16+ 필수
+# vLLM 추론용 (freeze) - torchao 0.16+ 필수, bitsandbytes 4bit 양자화용
 vllm==0.15.1
 torchao==0.16.0
 torch==2.9.1
@@ -9,3 +9,4 @@ tokenizers==0.22.2
 accelerate==1.10.0
 safetensors==0.7.0
 huggingface-hub==0.36.2
+bitsandbytes>=0.46.1

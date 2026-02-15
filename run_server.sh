@@ -25,12 +25,13 @@ echo ""
 
 # vLLM 백그라운드 실행 (로그는 파일로)
 VLLM_LOG="${PROJECT_DIR}/.vllm.log"
+# H100 1장(80GB): 70B bf16≈140GB라 불가. bitsandbytes 4bit로 ~40GB로 압축
 if [ -d "$ADAPTER_PATH" ] && [ -f "$ADAPTER_PATH/adapter_config.json" ]; then
   vllm serve "$BASE_MODEL" --enable-lora --lora-modules "default=$ADAPTER_PATH" \
-    --port "$PORT" --max-model-len "$MAX_LEN" --gpu-memory-utilization 0.9 \
+    --quantization bitsandbytes --port "$PORT" --max-model-len "$MAX_LEN" --gpu-memory-utilization 0.9 \
     > "$VLLM_LOG" 2>&1 &
 else
-  vllm serve "$BASE_MODEL" --port "$PORT" --max-model-len "$MAX_LEN" --gpu-memory-utilization 0.9 \
+  vllm serve "$BASE_MODEL" --quantization bitsandbytes --port "$PORT" --max-model-len "$MAX_LEN" --gpu-memory-utilization 0.9 \
     > "$VLLM_LOG" 2>&1 &
 fi
 VLLM_PID=$!
