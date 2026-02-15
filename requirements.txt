@@ -1,0 +1,19 @@
+# LLM 학습 환경 - RunPod H100 기준
+# Python 3.11+ 권장, PyTorch는 setup.sh에서 별도 설치
+
+# 핵심
+transformers>=4.40.0
+datasets>=2.18.0
+accelerate>=0.27.0
+
+# QLoRA
+peft>=0.10.0
+bitsandbytes>=0.43.0
+
+# Axolotl (PyTorch 설치 후)
+# pip install --no-build-isolation axolotl[flash-attn,deepspeed]
+
+# 유틸
+huggingface-hub>=0.23.0
+safetensors>=0.4.0
+pyyaml>=6.0

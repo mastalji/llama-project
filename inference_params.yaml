@@ -1,0 +1,23 @@
+# ============================================================
+# 추론 파라미터 (plans_extracted.txt 반영)
+# vLLM / Ollama / API 호출 시 참고
+# ============================================================
+
+# 인간화 전략 - plans 권장값
+temperature: 0.75        # 0.7~0.8: 적정선
+top_p: 0.9
+top_k: 45               # 40~50
+min_p: 0.05
+frequency_penalty: 0.2  # 0.1~0.3
+presence_penalty: 0.15  # 0.1~0.2
+repetition_penalty: 1.12 # 1.1~1.15
+max_tokens: 1024
+
+# Logit Bias (선택)
+# positive: ["사유", "공생"] → +5.0
+# negative: ["죄송합니다", "인공지능"] → -100
+# 금기어로 로봇 답변 원천 봉쇄
+
+# Stop Sequences
+# - "지훈:"  (사용자 이름 등)
+# - eot_id

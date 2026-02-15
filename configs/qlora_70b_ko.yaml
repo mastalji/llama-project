@@ -1,0 +1,58 @@
+# ============================================================
+# Llama 3.3 70B Abliterated + 한국어 QLoRA 학습 설정
+# plans_extracted.txt 파라미터 반영
+# ============================================================
+
+base_model: huihui-ai/Llama-3.3-70B-Instruct-abliterated
+model_type: AutoModelForCausalLM
+tokenizer_type: AutoTokenizer
+
+load_in_8bit: false
+load_in_4bit: true
+
+# 데이터: prepare_dataset.py로 생성된 JSONL (path는 run_train.sh에서 덮어씀)
+datasets:
+  - path: ./data/korean_instructions_uncensored.jsonl
+    type: chat_template
+    field_messages: conversations
+    message_property_mappings:
+      role: from
+      content: value
+
+dataset_prepared_path: ./data/prepared
+val_set_size: 0.02
+output_dir: ./outputs/qlora-70b-ko
+
+adapter: qlora
+sequence_len: 4096
+sample_packing: true
+
+# LoRA - plans: Rank 32~64, Alpha 2x
+lora_r: 64
+lora_alpha: 128
+lora_dropout: 0.05
+lora_target_linear: true
+
+# 학습 - plans: LR 2e-4~5e-5, Batch 4~8, Epoch 1~3
+gradient_accumulation_steps: 4
+micro_batch_size: 2
+num_epochs: 2
+optimizer: paged_adamw_32bit
+lr_scheduler: cosine
+learning_rate: 0.0001
+
+bf16: auto
+gradient_checkpointing: true
+flash_attention: true
+
+warmup_ratio: 0.1
+weight_decay: 0.01
+logging_steps: 1
+saves_per_epoch: 1
+
+# Llama 3.3
+special_tokens:
+  pad_token: "<|end_of_text|>"
+
+# 멀티 GPU (2+ H100) 시 deepspeed 권장
+# deepspeed: configs/ds_zero2.json
