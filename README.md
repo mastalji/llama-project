@@ -12,7 +12,7 @@ Llama 3.3 70B Abliterated를 한국어 능력 강화한 개인 비서(JARVIS 스
 
 ```bash
 cd /workspace
-curl -sL https://raw.githubusercontent.com/mastalji/llama-project/main/init_setup.sh | bash
+curl -sL https://raw.githubusercontent.com/mastalji/llama-project/master/init_setup.sh | bash
 ```
 
 또는 이미 clone 했다면:
