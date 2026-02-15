@@ -5,6 +5,7 @@
 # ============================================================
 
 set -e
+export PIP_DISABLE_PIP_VERSION_CHECK=1
 
 echo "[1/7] 시스템 확인..."
 nvidia-smi || { echo "nvidia-smi 실패. GPU 환경인지 확인하세요."; exit 1; }
@@ -35,6 +36,7 @@ echo "[5/7] 기본 의존성 설치..."
 
 echo "[6/7] Axolotl 설치 (flash-attn, deepspeed)..."
 pip install --no-build-isolation "axolotl[flash-attn,deepspeed]"
+pip install "packaging>=24.0"
 
 echo "[7/7] 완료"
 
