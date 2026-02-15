@@ -46,6 +46,9 @@ cd /workspace/llama-project
 ---
 
 ## 문제 해결
+**run_server 시 0%에서 멈춤 + "Skipping import of cpp extensions... torchao 0.16.0" 경고**  
+→ `./fix_torchao.sh` 한 번 실행 후 `./run_server.sh`
+
 **run_server 시 `ModuleNotFoundError: flex_attention`**  
 → `pip install --upgrade torchao` 후 재실행
 
